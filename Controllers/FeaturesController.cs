@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using ctrader.Controllers.Resources;
-using ctrader.Models;
+using ctrader.Core.Models;
 using ctrader.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,11 +21,11 @@ namespace ctrader.Controllers
         }
 
         [HttpGet("/api/features")]
-        public async Task<IEnumerable<FeatureResource>> GetFeatures()
+        public async Task<IEnumerable<KeyValuePairResource>> GetFeatures()
         {
             var features = await context.Features.ToListAsync();
 
-            return mapper.Map<List<Feature>, List<FeatureResource>>(features); 
+            return mapper.Map<List<Feature>, List<KeyValuePairResource>>(features); 
         }
        
     }

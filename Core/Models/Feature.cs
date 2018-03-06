@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ctrader.Models
+namespace ctrader.Core.Models
 {
     public class Feature
     {

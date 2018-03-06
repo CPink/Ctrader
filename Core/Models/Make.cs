@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using ctrader.Core.Models;
 
-namespace ctrader.Models
+namespace ctrader.Core.Models
 {
     public class Make
     {

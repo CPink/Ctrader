@@ -2,8 +2,8 @@ using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using ctrader.Controllers.Resources;
-using ctrader.Models;
-using ctrader.Persistence;
+using ctrader.Core.Models;
+using ctrader.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,27 +13,33 @@ namespace ctrader.Controllers
     public class VehiclesController : Controller
     {
         private readonly IMapper mapper;
-        private readonly CtraderDbContext context;
-        public VehiclesController(IMapper mapper, CtraderDbContext context)
+        private readonly IVehicleRepository repository;
+        private readonly IUnitOfWork uow;
+
+        public VehiclesController(IMapper mapper, IVehicleRepository repository, IUnitOfWork uow)
         {
-            this.context = context;
+            this.uow = uow;
+            this.repository = repository;
             this.mapper = mapper;
 
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateVehicle([FromBody] VehicleResource vehicleResource)
+        public async Task<IActionResult> CreateVehicle([FromBody] SaveVehicleResource vehicleResource)
         {
-            if(!ModelState.IsValid)
+
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var vehicle = mapper.Map<VehicleResource, Vehicle>(vehicleResource);
+            var vehicle = mapper.Map<SaveVehicleResource, Vehicle>(vehicleResource);
             vehicle.LastUpdate = DateTime.Now;
 
-            context.Vehicles.Add(vehicle);
-            await context.SaveChangesAsync();
+            repository.Add(vehicle);
+            await uow.CompleteAsync();
+
+            vehicle = await repository.GetVehicle(vehicle.Id);
 
             var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
 
@@ -41,23 +47,25 @@ namespace ctrader.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateVehicle(int id, [FromBody] VehicleResource vehicleResource)
+        public async Task<IActionResult> UpdateVehicle(int id, [FromBody] SaveVehicleResource vehicleResource)
         {
-            if(!ModelState.IsValid)
-            {
+            if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            }
-            
-            var vehicle = await context.Vehicles.Include(v => v.Features).SingleOrDefaultAsync(v => v.Id == id);
 
-             if(vehicle == null)
+            var vehicle = await repository.GetVehicle(id);
+
+
+            if (vehicle == null)
                 return NotFound();
 
+            mapper.Map<SaveVehicleResource, Vehicle>(vehicleResource);
             vehicle.LastUpdate = DateTime.Now;
 
-            await context.SaveChangesAsync();
+            await uow.CompleteAsync();
 
+            vehicle = await repository.GetVehicle(vehicle.Id);
             var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
+
 
             return Ok(result);
         }
@@ -65,25 +73,25 @@ namespace ctrader.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteVehicle(int id)
         {
-            var vehicle = await context.Vehicles.FindAsync(id);
+            var vehicle = await repository.GetVehicle(id, includeRelated: false);
 
-            if(vehicle == null)
+            if (vehicle == null)
                 return NotFound();
 
-            context.Remove(vehicle);
-            await context.SaveChangesAsync();
+            repository.Remove(vehicle);
+            await uow.CompleteAsync();
 
             return Ok(id);
         }
 
         public async Task<IActionResult> GetVheicle(int id)
         {
-            var vehicle = await context.Vehicles.Include(v => v.Features).SingleOrDefaultAsync(v => v.Id == id);
+            var vehicle = await repository.GetVehicle(id);
 
-            if(vehicle == null)
+            if (vehicle == null)
                 return NotFound();
 
-              var vehicleResource = mapper.Map<Vehicle, VehicleResource>(vehicle);   
+            var vehicleResource = mapper.Map<Vehicle, VehicleResource>(vehicle);
 
             return Ok(vehicleResource);
         }

@@ -20,7 +20,7 @@ namespace ctrader.Migrations
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("ctrader.Models.Feature", b =>
+            modelBuilder.Entity("ctrader.Core.Models.Feature", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -34,7 +34,7 @@ namespace ctrader.Migrations
                     b.ToTable("Features");
                 });
 
-            modelBuilder.Entity("ctrader.Models.Make", b =>
+            modelBuilder.Entity("ctrader.Core.Models.Make", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -48,7 +48,7 @@ namespace ctrader.Migrations
                     b.ToTable("Makes");
                 });
 
-            modelBuilder.Entity("ctrader.Models.Model", b =>
+            modelBuilder.Entity("ctrader.Core.Models.Model", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -66,7 +66,7 @@ namespace ctrader.Migrations
                     b.ToTable("Models");
                 });
 
-            modelBuilder.Entity("ctrader.Models.Vehicle", b =>
+            modelBuilder.Entity("ctrader.Core.Models.Vehicle", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -95,7 +95,7 @@ namespace ctrader.Migrations
                     b.ToTable("Vehicles");
                 });
 
-            modelBuilder.Entity("ctrader.Models.VehicleFeature", b =>
+            modelBuilder.Entity("ctrader.Core.Models.VehicleFeature", b =>
                 {
                     b.Property<int>("VehicleId");
 
@@ -108,30 +108,30 @@ namespace ctrader.Migrations
                     b.ToTable("VehicleFeatures");
                 });
 
-            modelBuilder.Entity("ctrader.Models.Model", b =>
+            modelBuilder.Entity("ctrader.Core.Models.Model", b =>
                 {
-                    b.HasOne("ctrader.Models.Make", "Make")
+                    b.HasOne("ctrader.Core.Models.Make", "Make")
                         .WithMany("Models")
                         .HasForeignKey("MakeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("ctrader.Models.Vehicle", b =>
+            modelBuilder.Entity("ctrader.Core.Models.Vehicle", b =>
                 {
-                    b.HasOne("ctrader.Models.Model", "Model")
+                    b.HasOne("ctrader.Core.Models.Model", "Model")
                         .WithMany()
                         .HasForeignKey("ModelId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("ctrader.Models.VehicleFeature", b =>
+            modelBuilder.Entity("ctrader.Core.Models.VehicleFeature", b =>
                 {
-                    b.HasOne("ctrader.Models.Feature", "Feature")
+                    b.HasOne("ctrader.Core.Models.Feature", "Feature")
                         .WithMany()
                         .HasForeignKey("FeatureId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("ctrader.Models.Vehicle", "Vehicle")
+                    b.HasOne("ctrader.Core.Models.Vehicle", "Vehicle")
                         .WithMany("Features")
                         .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade);

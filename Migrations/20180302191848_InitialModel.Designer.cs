@@ -21,7 +21,7 @@ namespace ctrader.Migrations
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("ctrader.Models.Make", b =>
+            modelBuilder.Entity("ctrader.Core.Models.Make", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -33,7 +33,7 @@ namespace ctrader.Migrations
                     b.ToTable("Makes");
                 });
 
-            modelBuilder.Entity("ctrader.Models.Model", b =>
+            modelBuilder.Entity("ctrader.Core.Models.Model", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -49,9 +49,9 @@ namespace ctrader.Migrations
                     b.ToTable("Model");
                 });
 
-            modelBuilder.Entity("ctrader.Models.Model", b =>
+            modelBuilder.Entity("ctrader.Core.Models.Model", b =>
                 {
-                    b.HasOne("ctrader.Models.Make", "Make")
+                    b.HasOne("ctrader.Core.Models.Make", "Make")
                         .WithMany("Models")
                         .HasForeignKey("MakeId")
                         .OnDelete(DeleteBehavior.Cascade);

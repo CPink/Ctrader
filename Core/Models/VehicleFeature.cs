@@ -1,7 +1,7 @@
 
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ctrader.Models
+namespace ctrader.Core.Models
 {
        [Table("VehicleFeatures")]
     public class VehicleFeature

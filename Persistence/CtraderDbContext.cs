@@ -1,11 +1,11 @@
-using ctrader.Models;
+using ctrader.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ctrader.Persistence
 {
     public class CtraderDbContext : DbContext
     {
-        public DbSet<Vehicle> Vehicles { get; set; }
+           public DbSet<Vehicle> Vehicles { get; set; }
            public DbSet<Make> Makes { get; set; }
            public DbSet<Feature> Features { get; set; }
 

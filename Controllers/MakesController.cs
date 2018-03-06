@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using ctrader.Controllers.Resources;
-using ctrader.Models;
+using ctrader.Core.Models;
 using ctrader.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
