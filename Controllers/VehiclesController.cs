@@ -27,11 +27,8 @@ namespace ctrader.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateVehicle([FromBody] SaveVehicleResource vehicleResource)
         {
-
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             var vehicle = mapper.Map<SaveVehicleResource, Vehicle>(vehicleResource);
             vehicle.LastUpdate = DateTime.Now;
@@ -58,7 +55,7 @@ namespace ctrader.Controllers
             if (vehicle == null)
                 return NotFound();
 
-            mapper.Map<SaveVehicleResource, Vehicle>(vehicleResource);
+            mapper.Map<SaveVehicleResource, Vehicle>(vehicleResource, vehicle);
             vehicle.LastUpdate = DateTime.Now;
 
             await uow.CompleteAsync();
@@ -84,6 +81,7 @@ namespace ctrader.Controllers
             return Ok(id);
         }
 
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetVheicle(int id)
         {
             var vehicle = await repository.GetVehicle(id);

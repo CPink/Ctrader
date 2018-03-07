@@ -60,6 +60,10 @@
     "zone.js": "0.8.12"
   },
   "dependencies": {
-    "@angular/cli": "^1.7.2"
+    "@angular/cli": "^1.7.2",
+    "@types/underscore": "^1.8.7",
+    "ng2-toasty": "^2.5.0",
+    "raven-js": "^3.23.1",
+    "underscore": "^1.8.3"
   }
 }
