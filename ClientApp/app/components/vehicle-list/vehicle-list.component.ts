@@ -32,9 +32,8 @@ export class VehicleListComponent implements OnInit {
 
   ngOnInit() {
 
-
     this.vehicleService.getMakes()
-    .subscribe(makes => this.makes = makes);
+     .subscribe(makes => this.makes = makes);
 
     this.populateVehicles();
     
@@ -42,7 +41,7 @@ export class VehicleListComponent implements OnInit {
 
   private populateVehicles(){
     this.vehicleService.getVehicles(this.query)
-    .subscribe(result => this.queryResult = result);
+     .subscribe(result => this.queryResult = result);
   }
 
   onVehicleQueryChange(){
