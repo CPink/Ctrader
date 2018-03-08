@@ -6,6 +6,7 @@ using ctrader.Core.Models;
 using ctrader.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace ctrader.Controllers
 {
@@ -92,6 +93,15 @@ namespace ctrader.Controllers
             var vehicleResource = mapper.Map<Vehicle, VehicleResource>(vehicle);
 
             return Ok(vehicleResource);
+        }
+
+        [HttpGet]
+        public async Task<QueryResultResource<VehicleResource>> GetVehicles(VehicleQueryResource vehicleQueryResource)
+        {
+            var filter = mapper.Map<VehicleQueryResource, VehicleQuery>(vehicleQueryResource);
+            var queryResult = await repository.GetVehicles(filter);
+ 
+            return mapper.Map<QueryResult<Vehicle>, QueryResultResource<VehicleResource>>(queryResult);
         }
     }
 }

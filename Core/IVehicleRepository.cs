@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using ctrader.Controllers.Resources;
 using ctrader.Core.Models;
 
 namespace ctrader.Core
@@ -10,6 +12,8 @@ namespace ctrader.Core
          void Add(Vehicle vehicle);
 
          void Remove(Vehicle vehicle);
+
+         Task<QueryResult<Vehicle>> GetVehicles(VehicleQuery filter);
+     }
         
-    }
 }

@@ -24,6 +24,7 @@ const nonTreeShakableModules = [
     'raven-js',
     'ng2-toasty',
     'underscore',
+    'font-awesome/css/font-awesome.css',
     'ng2-toasty/bundles/style-bootstrap.css',
     'jquery',
 ];
